@@ -43,9 +43,16 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
         return $reflection->getValue($object);
     }
     
-    public function callConstructor(&$object, $args = [])
+    public function invokeConstructor(&$object, $args = [])
     {
         $as_class = get_class($object);
         (new \ReflectionClass($as_class))->getConstructor()->invokeArgs($object, $args);
+    }
+    
+    public function setPropertyValue(&$object, $propertyName, $value, $as_static = false)
+    {
+        $reflection = new \ReflectionProperty(get_class($object), $propertyName);
+        $reflection->setAccessible(true);
+        $reflection->setValue($as_static === true ? NULL : $object, $value);
     }
 }
