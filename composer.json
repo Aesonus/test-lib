@@ -1,0 +1,15 @@
+{
+    "name": "aesonus/test-lib",
+    "description": "Defines a base test case with some nice methods",
+    "authors": [
+        {
+            "name": "Aesonus",
+            "email": "corylcomposinger@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "phpunit/phpunit": "^5.7",
+        "mikey179/vfsStream": "~1"
+    }
+}
