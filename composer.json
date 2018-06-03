@@ -11,5 +11,10 @@
     "require": {
         "phpunit/phpunit": "^5.7",
         "mikey179/vfsStream": "~1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aesonus\\TestLib\\": "src/"
+        }
     }
 }
