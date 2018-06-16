@@ -2,6 +2,8 @@
 /*
  * This code is part of the aesonus/test-lib package.
  * This software is licensed under the MIT License. Please see LICENSE for more details.
+ * Some code was provided in PHPUnit documentation and is goverened by its license terms
+ * 
  */
 
 namespace Aesonus\TestLib;
@@ -10,10 +12,14 @@ namespace Aesonus\TestLib;
  * Description of BaseTestCase
  *
  * @author Aesonus <corylcomposinger at gmail.com>
+ * @author Sebastian Bergmann <sebastian@phpunit.de>
  */
 abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
 {
     /**
+     * This method was included as an example in the PHPUnit documentation,
+     * and is governed by it's license terms.
+     * (c) Sebastian Bergmann <sebastian@phpunit.de>
      * Call protected/private method of a class.
      *
      * @param object &$object    Instantiated object that we will run method on.
