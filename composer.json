@@ -14,7 +14,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Aesonus\\TestLib\\": "src/"
+            "Aesonus\\TestLib\\": "src/",
+            "Aesonus\\TestLib\\Tests\\": "tests/"
         }
     }
 }

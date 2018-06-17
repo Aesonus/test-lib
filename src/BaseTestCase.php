@@ -20,6 +20,7 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
      * This method was included as an example in the PHPUnit documentation,
      * and is governed by it's license terms.
      * (c) Sebastian Bergmann <sebastian@phpunit.de>
+     * 
      * Call protected/private method of a class.
      *
      * @param object &$object    Instantiated object that we will run method on.
@@ -37,8 +38,8 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
     }
     
     /**
-     * Get protected and private properties of an object
-     * @param \StdClass $object
+     * Get protected and private properties of an object. Also works on statics.
+     * @param object $object
      * @param string $propertyName
      * @return mixed
      */
@@ -49,16 +50,30 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
         return $reflection->getValue($object);
     }
     
+    /**
+     * Sets protected and private properties of an object. Also works on statics
+     * @param object $object
+     * @param string $propertyName
+     * @param mixed $value
+     * @param boolean $as_static This parameter is only for backward compatibility
+     * and is deprecated.
+     */
+    public function setPropertyValue(&$object, $propertyName, $value, $as_static = false)
+    {
+        $reflection = new \ReflectionProperty(get_class($object), $propertyName);
+        $reflection->setAccessible(true);
+        $reflection->setValue($object, $value);
+    }
+
+    /**
+     * 
+     * @param object &$object Instantiated object that we will run construct on.
+     * @param array $args Array of parameters to pass into method.
+     */
     public function invokeConstructor(&$object, $args = [])
     {
         $as_class = get_class($object);
         (new \ReflectionClass($as_class))->getConstructor()->invokeArgs($object, $args);
     }
     
-    public function setPropertyValue(&$object, $propertyName, $value, $as_static = false)
-    {
-        $reflection = new \ReflectionProperty(get_class($object), $propertyName);
-        $reflection->setAccessible(true);
-        $reflection->setValue($as_static === true ? NULL : $object, $value);
-    }
 }
