@@ -64,6 +64,8 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
         $reflection->setAccessible(true);
         $reflection->setValue($object, $value);
     }
+    
+    //TODO: Make a function that accepts arrays and sets multiple properties at once
 
     /**
      * 

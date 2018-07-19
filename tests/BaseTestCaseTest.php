@@ -142,7 +142,8 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
     public function getStaticPrivatePropertyValue()
     {
         $expected = 3.14159;
-        $this->assertEquals($expected, $this->baseTestCase->getPropertyValue(new TestHelper(), 'testStaticPrivateProperty'));
+        $test_helper = new TestHelper();
+        $this->assertEquals($expected, $this->baseTestCase->getPropertyValue($test_helper, 'testStaticPrivateProperty'));
     }
     
     /**
