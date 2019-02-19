@@ -18,13 +18,13 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
 
     /**
      *
-     * @var \Aesonus\TestLib\BaseTestCase 
+     * @var \Aesonus\TestLib\BaseTestCase
      */
     public $baseTestCase;
     public $mockObject;
     public static $methodToInvoke = 'testMethod';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->baseTestCase = $this->getMockForAbstractClass(\Aesonus\TestLib\BaseTestCase::class);
         $this->mockObject = $this->getMockBuilder(TestHelper::class)->setMethods([static::$methodToInvoke])->disableOriginalConstructor()
@@ -126,7 +126,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
                 ->getPropertyValue($mockObject, $method)
         );
     }
-    
+
     /**
      * @test
      */
@@ -135,7 +135,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
         $expected = 'expected static';
         $this->assertEquals($expected, $this->baseTestCase->getPropertyValue($this->mockObject, 'testStaticProtectedProperty'));
     }
-    
+
     /**
      * @test
      */
@@ -145,7 +145,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
         $test_helper = new TestHelper();
         $this->assertEquals($expected, $this->baseTestCase->getPropertyValue($test_helper, 'testStaticPrivateProperty'));
     }
-    
+
     /**
      * @test
      */
@@ -160,7 +160,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
                 ->getPropertyValue($mockObject, $method)
         );
     }
-    
+
     /**
      * @test
      */
@@ -175,7 +175,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
                 ->getPropertyValue($mockObject, $method)
         );
     }
-    
+
     /**
      * @test
      */
@@ -184,7 +184,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
         $this->mockObject->expects($this->once())->method(static::$methodToInvoke);
         $this->baseTestCase->invokeConstructor($this->mockObject);
     }
-    
+
     /**
      * @test
      * @dataProvider parametersDataProvider

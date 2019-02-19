@@ -3,7 +3,7 @@
  * This code is part of the aesonus/test-lib package.
  * This software is licensed under the MIT License. Please see LICENSE for more details.
  * Some code was provided in PHPUnit documentation and is goverened by its license terms
- * 
+ *
  */
 
 namespace Aesonus\TestLib;
@@ -20,7 +20,7 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
      * This method was included as an example in the PHPUnit documentation,
      * and is governed by it's license terms.
      * (c) Sebastian Bergmann <sebastian@phpunit.de>
-     * 
+     *
      * Call protected/private method of a class.
      *
      * @param object &$object    Instantiated object that we will run method on.
@@ -36,7 +36,7 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
         $method->setAccessible(true);
         return $method->invokeArgs($object, $parameters);
     }
-    
+
     /**
      * Get protected and private properties of an object. Also works on statics.
      * @param object $object
@@ -49,7 +49,7 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
         $reflection->setAccessible(true);
         return $reflection->getValue($object);
     }
-    
+
     /**
      * Sets protected and private properties of an object. Also works on statics
      * @param object $object
@@ -64,11 +64,11 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
         $reflection->setAccessible(true);
         $reflection->setValue($object, $value);
     }
-    
+
     //TODO: Make a function that accepts arrays and sets multiple properties at once
 
     /**
-     * 
+     *
      * @param object &$object Instantiated object that we will run construct on.
      * @param array $args Array of parameters to pass into method.
      */
@@ -77,5 +77,19 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
         $as_class = get_class($object);
         (new \ReflectionClass($as_class))->getConstructor()->invokeArgs($object, $args);
     }
-    
+
+    /**
+     * Asserts that the array has the expected values in no particular order and
+     * nothing else.
+     *
+     * @param array $expected
+     * @param mixed $actual
+     * @param string $message
+     * @throws PHPUnit\Framework\AssertionFailedError
+     */
+    public static function assertArrayContainsValues(array $expected, $actual, $message = '')
+    {
+        static::assertThat($value, new PHPUnit\ConstraintArrayContainsValues($expected), $message);
+    }
+
 }
