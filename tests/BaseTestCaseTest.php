@@ -6,19 +6,22 @@
 
 namespace Aesonus\TestLib\Tests;
 
+use Aesonus\TestLib\BaseTestCase;
 use Aesonus\TestLib\Tests\TestHelper;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Description of BaseTestCaseTest
  *
  * @author Aesonus <corylcomposinger at gmail.com>
  */
-class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
+class BaseTestCaseTest extends TestCase
 {
 
     /**
      *
-     * @var \Aesonus\TestLib\BaseTestCase
+     * @var BaseTestCase
      */
     public $baseTestCase;
     public $mockObject;
@@ -26,7 +29,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->baseTestCase = $this->getMockForAbstractClass(\Aesonus\TestLib\BaseTestCase::class);
+        $this->baseTestCase = $this->getMockForAbstractClass(BaseTestCase::class);
         $this->mockObject = $this->getMockBuilder(TestHelper::class)->setMethods([static::$methodToInvoke])->disableOriginalConstructor()
             ->getMock();
         //$this->mockObject->expects($this->once())->method(static::$methodToInvoke)->willReturn(true);
@@ -191,9 +194,25 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
      */
     public function invokeConstructorWithParametersCallsTheRightMethod($expected_params)
     {
-         $mock_expected_params = $this->getMockExpectedParams($expected_params);
+        $mock_expected_params = $this->getMockExpectedParams($expected_params);
         //Set expectation
         call_user_func_array([$this->mockObject->expects($this->once())->method(static::$methodToInvoke), 'with'], $mock_expected_params);
         $this->baseTestCase->invokeConstructor($this->mockObject, $expected_params);
+    }
+
+    /**
+     * @test
+     */
+    public function testAssertArrayContainsValues()
+    {
+        BaseTestCase::assertArrayContainsValues(['hi', 'there'], ['there', 'hi']);
+
+        $this->expectException(\Exception::class);
+
+        try {
+            BaseTestCase::assertArrayContainsValues(['hi', 'there'], ['hi']);
+        } catch (AssertionFailedError $exc) {
+            throw new \Exception();
+        }
     }
 }

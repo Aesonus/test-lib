@@ -89,7 +89,7 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
      */
     public static function assertArrayContainsValues(array $expected, $actual, $message = '')
     {
-        static::assertThat($value, new PHPUnit\ConstraintArrayContainsValues($expected), $message);
+        static::assertThat($actual, new PHPUnit\ConstraintArrayContainsValues($expected), $message);
     }
 
 }
