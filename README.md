@@ -2,7 +2,7 @@
 
 # Test Lib
 
-This package contains a base class for testing purposes. It also includes phpunit version 8. And the
+This package contains a base class for testing purposes. It also includes phpunit version 8, and a
 virtual file system to mock the real file system.
 
 ## Installation
