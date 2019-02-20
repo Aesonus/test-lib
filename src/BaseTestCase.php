@@ -26,11 +26,13 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
      * @param object &$object    Instantiated object that we will run method on.
      * @param string $methodName Method name to call
      * @param array  $parameters Array of parameters to pass into method.
+     * @deprecated since version 3.0
      *
      * @return mixed Method return.
      */
     public function invokeMethod(&$object, $methodName, array $parameters = [])
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated and will be removed in v4', E_USER_NOTICE);
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
@@ -42,9 +44,11 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
      * @param object $object
      * @param string $propertyName
      * @return mixed
+     * @deprecated since version 3.0
      */
     public function getPropertyValue(&$object, $propertyName)
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated and will be removed in v4', E_USER_NOTICE);
         $reflection = new \ReflectionProperty(get_class($object), $propertyName);
         $reflection->setAccessible(true);
         return $reflection->getValue($object);
@@ -57,9 +61,11 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
      * @param mixed $value
      * @param boolean $as_static This parameter is only for backward compatibility
      * and is deprecated.
+     * @deprecated since version 3.0
      */
     public function setPropertyValue(&$object, $propertyName, $value, $as_static = false)
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated and will be removed in v4', E_USER_NOTICE);
         $reflection = new \ReflectionProperty(get_class($object), $propertyName);
         $reflection->setAccessible(true);
         $reflection->setValue($object, $value);

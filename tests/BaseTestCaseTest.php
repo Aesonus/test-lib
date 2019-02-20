@@ -29,6 +29,7 @@ class BaseTestCaseTest extends TestCase
 
     protected function setUp(): void
     {
+        \PHPUnit\Framework\Error\Notice::$enabled = false;
         $this->baseTestCase = $this->getMockForAbstractClass(BaseTestCase::class);
         $this->mockObject = $this->getMockBuilder(TestHelper::class)->setMethods([static::$methodToInvoke])->disableOriginalConstructor()
             ->getMock();
