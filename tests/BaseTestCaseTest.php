@@ -6,27 +6,31 @@
 
 namespace Aesonus\TestLib\Tests;
 
+use Aesonus\TestLib\BaseTestCase;
 use Aesonus\TestLib\Tests\TestHelper;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Description of BaseTestCaseTest
  *
  * @author Aesonus <corylcomposinger at gmail.com>
  */
-class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
+class BaseTestCaseTest extends TestCase
 {
 
     /**
      *
-     * @var \Aesonus\TestLib\BaseTestCase 
+     * @var BaseTestCase
      */
     public $baseTestCase;
     public $mockObject;
     public static $methodToInvoke = 'testMethod';
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->baseTestCase = $this->getMockForAbstractClass(\Aesonus\TestLib\BaseTestCase::class);
+        \PHPUnit\Framework\Error\Notice::$enabled = false;
+        $this->baseTestCase = $this->getMockForAbstractClass(BaseTestCase::class);
         $this->mockObject = $this->getMockBuilder(TestHelper::class)->setMethods([static::$methodToInvoke])->disableOriginalConstructor()
             ->getMock();
         //$this->mockObject->expects($this->once())->method(static::$methodToInvoke)->willReturn(true);
@@ -126,7 +130,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
                 ->getPropertyValue($mockObject, $method)
         );
     }
-    
+
     /**
      * @test
      */
@@ -135,7 +139,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
         $expected = 'expected static';
         $this->assertEquals($expected, $this->baseTestCase->getPropertyValue($this->mockObject, 'testStaticProtectedProperty'));
     }
-    
+
     /**
      * @test
      */
@@ -145,7 +149,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
         $test_helper = new TestHelper();
         $this->assertEquals($expected, $this->baseTestCase->getPropertyValue($test_helper, 'testStaticPrivateProperty'));
     }
-    
+
     /**
      * @test
      */
@@ -160,7 +164,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
                 ->getPropertyValue($mockObject, $method)
         );
     }
-    
+
     /**
      * @test
      */
@@ -175,7 +179,7 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
                 ->getPropertyValue($mockObject, $method)
         );
     }
-    
+
     /**
      * @test
      */
@@ -184,16 +188,32 @@ class BaseTestCaseTest extends \PHPUnit\Framework\TestCase
         $this->mockObject->expects($this->once())->method(static::$methodToInvoke);
         $this->baseTestCase->invokeConstructor($this->mockObject);
     }
-    
+
     /**
      * @test
      * @dataProvider parametersDataProvider
      */
     public function invokeConstructorWithParametersCallsTheRightMethod($expected_params)
     {
-         $mock_expected_params = $this->getMockExpectedParams($expected_params);
+        $mock_expected_params = $this->getMockExpectedParams($expected_params);
         //Set expectation
         call_user_func_array([$this->mockObject->expects($this->once())->method(static::$methodToInvoke), 'with'], $mock_expected_params);
         $this->baseTestCase->invokeConstructor($this->mockObject, $expected_params);
+    }
+
+    /**
+     * @test
+     */
+    public function testAssertArrayContainsValues()
+    {
+        BaseTestCase::assertArrayContainsValues(['hi', 'there'], ['there', 'hi']);
+
+        $this->expectException(\Exception::class);
+
+        try {
+            BaseTestCase::assertArrayContainsValues(['hi', 'there'], ['hi']);
+        } catch (AssertionFailedError $exc) {
+            throw new \Exception();
+        }
     }
 }
