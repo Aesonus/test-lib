@@ -28,13 +28,10 @@ class ConstraintArrayContainsAtLeastValues extends Constraint
 
     protected function matches($other): bool
     {
-        $copy_of_other = $other;
+        $copy_of_other = $this->expected;
         array_map(function ($value) use ($other, &$copy_of_other) {
             if (in_array($value, $other, true)) {
                 array_pop($copy_of_other);
-                return false;
-            } else {
-                return true;
             }
         }, $this->expected);
         return empty($copy_of_other);
