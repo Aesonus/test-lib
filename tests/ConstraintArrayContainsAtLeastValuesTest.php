@@ -23,7 +23,7 @@ class ConstraintArrayContainsAtLeastValuesTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->testObj = new ConstraintArrayContainsAtLeastValues([4, 'hi', 3.141, 67, 'hello world']);
+        $this->testObj = new ConstraintArrayContainsAtLeastValues([4, 'hi', 3.141]);
     }
 
     /**
@@ -43,10 +43,13 @@ class ConstraintArrayContainsAtLeastValuesTest extends TestCase
     {
         return [
             'in same order' => [
-                ['hi', 'hello world', 67]
+                [4, 'hi', 3.141]
             ],
             'not in same order' => [
-                ['hi', 4]
+                ['hi', 4, 3.141]
+            ],
+            'possible bug?' => [
+                ['hi', 3.141, 4, 'hello world']
             ]
         ];
     }
@@ -82,9 +85,9 @@ class ConstraintArrayContainsAtLeastValuesTest extends TestCase
     {
         return [
             'not enough' => [
-                ['hi', 3.141, 4, 23]
+                ['hi', 3.141]
             ],
-            'too many' => [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]],
+            'too many' => [[1, 2, 3, 4, 'hi', 6, 7, 8, 9, 10, 11, 12]],
         ];
     }
 }
