@@ -37,35 +37,6 @@ class BaseTestCaseTest extends TestCase
         parent::setUp();
     }
 
-    private function getMockExpectedParams($expected_params)
-    {
-        return array_map(function ($value) {
-            return $this->equalTo($value);
-        }, $expected_params);
-    }
-
-    /**
-     * @test
-     */
-    public function invokeMethodCallsTheRightMethod()
-    {
-        //Set expectation
-        $this->mockObject->expects($this->once())->method(static::$methodToInvoke);
-        $this->baseTestCase->invokeMethod($this->mockObject, static::$methodToInvoke);
-    }
-
-    /**
-     * @test
-     * @dataProvider parametersDataProvider
-     */
-    public function invokeMethodWithArgsCallsMethodWithArgs($expected_params)
-    {
-        $mock_expected_params = $this->getMockExpectedParams($expected_params);
-        //Set expectation
-        call_user_func_array([$this->mockObject->expects($this->once())->method(static::$methodToInvoke), 'with'], $mock_expected_params);
-        $this->baseTestCase->invokeMethod($this->mockObject, static::$methodToInvoke, $expected_params);
-    }
-
     public function parametersDataProvider()
     {
         return [
@@ -76,108 +47,11 @@ class BaseTestCaseTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     */
-    public function getProtectedPropertyValueGetsCorrectValueFromTestHelper()
+    private function getMockExpectedParams($expected_params)
     {
-        $expected = 'expected';
-        $this->assertEquals($expected, $this
-                ->baseTestCase
-                ->getPropertyValue($this->mockObject, 'testProtectedProperty')
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getPrivatePropertyValueGetsCorrectValueFromTestHelper()
-    {
-        $expected = 3.141;
-        $mockObject = new TestHelper();
-        $this->assertEquals($expected, $this
-                ->baseTestCase
-                ->getPropertyValue($mockObject, 'testPrivateProperty')
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setPrivatePropertyValueGetsCorrectValueFromTestHelper()
-    {
-        $expected = new \stdClass();
-        $mockObject = new TestHelper();
-        $method = 'testPrivateProperty';
-        $this->baseTestCase->setPropertyValue($mockObject, $method, $expected);
-        $this->assertEquals($expected, $this
-                ->baseTestCase
-                ->getPropertyValue($mockObject, $method)
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setProtectedPropertyValueGetsCorrectValueFromTestHelper()
-    {
-        $expected = new \stdClass();
-        $mockObject = new TestHelper();
-        $method = 'testProtectedProperty';
-        $this->baseTestCase->setPropertyValue($mockObject, $method, $expected);
-        $this->assertEquals($expected, $this
-                ->baseTestCase
-                ->getPropertyValue($mockObject, $method)
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getStaticProtectedPropertyValue()
-    {
-        $expected = 'expected static';
-        $this->assertEquals($expected, $this->baseTestCase->getPropertyValue($this->mockObject, 'testStaticProtectedProperty'));
-    }
-
-    /**
-     * @test
-     */
-    public function getStaticPrivatePropertyValue()
-    {
-        $expected = 3.14159;
-        $test_helper = new TestHelper();
-        $this->assertEquals($expected, $this->baseTestCase->getPropertyValue($test_helper, 'testStaticPrivateProperty'));
-    }
-
-    /**
-     * @test
-     */
-    public function setStaticProtectedPropertyValueGetsCorrectValueFromTestHelper()
-    {
-        $expected = new \stdClass();
-        $mockObject = new TestHelper();
-        $method = 'testStaticProtectedProperty';
-        $this->baseTestCase->setPropertyValue($mockObject, $method, $expected);
-        $this->assertEquals($expected, $this
-                ->baseTestCase
-                ->getPropertyValue($mockObject, $method)
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setStaticPrivatePropertyValueGetsCorrectValueFromTestHelper()
-    {
-        $expected = 'new \stdClass()';
-        $mockObject = new TestHelper();
-        $method = 'testStaticPrivateProperty';
-        $this->baseTestCase->setPropertyValue($mockObject, $method, $expected);
-        $this->assertEquals($expected, $this
-                ->baseTestCase
-                ->getPropertyValue($mockObject, $method)
-        );
+        return array_map(function ($value) {
+            return $this->equalTo($value);
+        }, $expected_params);
     }
 
     /**
