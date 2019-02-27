@@ -23,6 +23,7 @@ class TestCase extends Aesonus\TestLib\BaseTestCase
 {
     public function testCase() {
         $this->assertArrayContainsValues($expected, $actual);
+        $this->assertArrayContainsAtLeastValues($expected, $actual);
     }
 }
 ```

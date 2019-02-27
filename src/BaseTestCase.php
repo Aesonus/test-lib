@@ -98,4 +98,17 @@ abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
         static::assertThat($actual, new PHPUnit\ConstraintArrayContainsValues($expected), $message);
     }
 
+    /**
+     * Asserts that the array has at least the expected values in no particular order
+     *
+     * @param array $expected
+     * @param mixed $actual
+     * @param string $message
+     * @throws PHPUnit\Framework\AssertionFailedError
+     */
+    public static function assertArrayContainsAtLeastValues(array $expected, $actual, $message = '')
+    {
+        static::assertThat($actual, new PHPUnit\ConstraintArrayContainsAtLeastValues($expected), $message);
+    }
+
 }
