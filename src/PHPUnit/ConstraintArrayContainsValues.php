@@ -6,12 +6,14 @@
 
 namespace Aesonus\TestLib\PHPUnit;
 
+use PHPUnit\Framework\Constraint\Constraint;
+
 /**
  * Asserts that an array has the specified values in no particular order and nothing else
  *
  * @author Aesonus <corylcomposinger at gmail.com>
  */
-class ConstraintArrayContainsValues extends \PHPUnit\Framework\Constraint\Constraint
+class ConstraintArrayContainsValues extends Constraint
 {
     /**
      *
@@ -40,7 +42,6 @@ class ConstraintArrayContainsValues extends \PHPUnit\Framework\Constraint\Constr
 
     public function toString(): string
     {
-
         return 'has only array values ' . $this->exporter()->export($this->expected);
     }
 }
