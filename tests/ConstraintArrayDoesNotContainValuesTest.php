@@ -22,7 +22,7 @@ class ConstraintArrayDoesNotContainValuesTest extends TestCase
     
     protected function setUp(): void
     {
-        $this->testObj = new ConstraintArrayDoesNotContainValues([4, 'hi', 3.141]);
+        $this->testObj = new ConstraintArrayDoesNotContainValues([4, 'hi', 3.141, ['an' => 'array']]);
     }
     
     /**
@@ -85,7 +85,7 @@ class ConstraintArrayDoesNotContainValuesTest extends TestCase
     {
         return [
             'contains one of' => [
-                ['hi']
+                [['an' => 'array']]
             ],
             'contains one of and others' => [
                 [3.141, 'others']

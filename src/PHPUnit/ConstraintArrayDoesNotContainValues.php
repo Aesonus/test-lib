@@ -29,7 +29,7 @@ class ConstraintArrayDoesNotContainValues extends Constraint
     {
         $expected = $this->expected;
         $results = array_filter($other, function ($value) use ($expected) {
-            return !array_search($value, $expected, true);
+            return array_search($value, $expected, true) === false;
         });
         return count($results) >= count($other);
     }
